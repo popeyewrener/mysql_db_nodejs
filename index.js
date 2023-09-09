@@ -2,6 +2,8 @@ const express = require("express");
 const http = require("http");
 const { mysqlobject } = require("./db_connector/mysql_connector");
 const app = express();
+const cors = require("cors");
+const cookieParser = require("cookie-parser")
 const server = http.createServer(app);
 const dotenv = require("dotenv").config();
 const port = process.env.PORT;
@@ -11,7 +13,9 @@ const mysql_password = process.env.DB_PASSWORD;
 const mysql_db = process.env.DB_DATABASE;
 const mysql_host = process.env.DB_HOST;
 let sqlobject;
-
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(cookieParser());
 app.get("/", (req,res)=>{
     res.send("You visited the website");
 });
@@ -19,7 +23,7 @@ app.post("/coin/change/", async (req,res)=>{
     let test_num = req.body.test_num;
     let newData = {"test_num":test_num};
     let tableName = "for_testing";
-    connection.query(`INSERT INTO ${tableName} SET ?`, newData, (error, results) => {
+    sqlobject.query(`INSERT INTO ${tableName} SET ?`, newData, (error, results) => {
         if (error) {
           console.error('Error inserting a new row:', error);
         } else {

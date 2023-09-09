@@ -10,14 +10,20 @@ const mysql_username = process.env.DB_USERNAME;
 const mysql_password = process.env.DB_PASSWORD;
 const mysql_db = process.env.DB_DATABASE;
 const mysql_host = process.env.DB_HOST;
-
+let sqlobject;
 
 app.get("/", (req,res)=>{
     res.send("You visited the website");
-})
-server.listen(port, ()=>{
+});
+app.post("/coin/change", async (req,res)=>{
+    sqlobject.query
+
+});
+
+
+server.listen(port, async ()=>{
     console.log(`Server running at PORT:${port}`)
-    let sqlobject = mysqlobject(mysql_host, mysql_port, mysql_username,mysql_password, mysql_db);
+    sqlobject = await mysqlobject(mysql_host, mysql_port, mysql_username,mysql_password, mysql_db);
     console.log(sqlobject);
 
 

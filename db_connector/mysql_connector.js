@@ -16,6 +16,7 @@ const mysqlobject = async (host,port,user, pass, dbName)=>{
           return error
         } else {
           console.log('Connected to MySQL database!');
+          console.log(connection);
           return connection;
         }
       });

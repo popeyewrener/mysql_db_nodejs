@@ -16,7 +16,7 @@ let sqlobject;
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(cookieParser());
-sqlobject = await mysqlobject(mysql_host, mysql_port, mysql_username,mysql_password, mysql_db);
+sqlobject = mysqlobject(mysql_host, mysql_port, mysql_username,mysql_password, mysql_db);
 console.log(sqlobject);
 app.get("/", (req,res)=>{
     res.send("You visited the website");

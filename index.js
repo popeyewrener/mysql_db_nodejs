@@ -16,6 +16,8 @@ let sqlobject;
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(cookieParser());
+sqlobject = await mysqlobject(mysql_host, mysql_port, mysql_username,mysql_password, mysql_db);
+console.log(sqlobject);
 app.get("/", (req,res)=>{
     res.send("You visited the website");
 });
@@ -36,8 +38,7 @@ app.post("/coin/change/", async (req,res)=>{
 
 server.listen(port, async ()=>{
     console.log(`Server running at PORT:${port}`)
-    sqlobject = await mysqlobject(mysql_host, mysql_port, mysql_username,mysql_password, mysql_db);
-    console.log(sqlobject);
+    
 
 
 })

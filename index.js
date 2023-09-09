@@ -24,7 +24,7 @@ app.get("/", (req,res)=>{
 app.post("/coin/change/", async (req,res)=>{
     let reqBody = req.body;
     let test_num = reqBody.test_num;
-    let newData = {"test_num":test_num};
+    let newData = {"test_num":10};
     let tableName = "for_testing";
     try {
         const connection = await mysqlobject(mysql_host, mysql_port, mysql_username,mysql_password, mysql_db);

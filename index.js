@@ -22,7 +22,8 @@ app.get("/", (req,res)=>{
     res.send("You visited the website");
 });
 app.post("/coin/change/", async (req,res)=>{
-    let test_num = req.body.test_num;
+    let reqBody = req.body;
+    let test_num = reqBody.test_num;
     let newData = {"test_num":test_num};
     let tableName = "for_testing";
     try {

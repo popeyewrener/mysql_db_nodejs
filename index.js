@@ -25,6 +25,7 @@ app.post("/coin/change", async (req,res)=>{
         } else {
           console.log(`New row inserted with ID: ${results.insertId}`);
         }});
+    res.send("succesfully added")    
 
 });
 

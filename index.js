@@ -16,7 +16,15 @@ app.get("/", (req,res)=>{
     res.send("You visited the website");
 });
 app.post("/coin/change", async (req,res)=>{
-    sqlobject.query
+    let test_num = req.body.test_num;
+    let newData = {"test_num":test_num};
+    let tableName = "for_testing";
+    connection.query(`INSERT INTO ${tableName} SET ?`, newData, (error, results) => {
+        if (error) {
+          console.error('Error inserting a new row:', error);
+        } else {
+          console.log(`New row inserted with ID: ${results.insertId}`);
+        }});
 
 });
 

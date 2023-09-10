@@ -19,7 +19,7 @@ console.log(sqlobject);
 app.get("/", (req,res)=>{
     res.send("You visited the website");
 });
-app.post("/coin/change/", coinRoute);
+app.use("/coin/change/", coinRoute);
 
 
 server.listen(port, async ()=>{

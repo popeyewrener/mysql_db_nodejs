@@ -15,7 +15,7 @@ let coinfunction = async (req, res) => {
   let type = reqBody.type;
 
   let usertableName = "tbl_users";
-  let getdataquery = `SELECT purchased FROM ${usertableName} WHERE id = ${user_id}`;
+  let getdataquery = `SELECT purchased FROM ${usertableName} WHERE user_id = ${user_id}`;
 
   try {
     const connection = await mysqlobject(
@@ -34,7 +34,7 @@ let coinfunction = async (req, res) => {
 
     if (type == "credit") {
       let final_coins = curr_purchased + fetch_coin;
-      let updateQuery = `UPDATE ${usertableName} SET purchased = ${final_coins} WHERE id = ${user_id}`;
+      let updateQuery = `UPDATE ${usertableName} SET purchased = ${final_coins} WHERE user_id = ${user_id}`;
 
       // Execute the UPDATE query using the promise-based 'query' method
       await connection.query(updateQuery);
@@ -44,7 +44,7 @@ let coinfunction = async (req, res) => {
       let final_coins = curr_purchased - fetch_coin;
 
       if (final_coins >= 0) {
-        let updateQuery = `UPDATE ${usertableName} SET purchased = ${final_coins} WHERE id = ${user_id}`;
+        let updateQuery = `UPDATE ${usertableName} SET purchased = ${final_coins} WHERE user_id = ${user_id}`;
 
         // Execute the UPDATE query using the promise-based 'query' method
         await connection.query(updateQuery);

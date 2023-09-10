@@ -1,6 +1,6 @@
 const express = require("express");
 const http = require("http");
-const { mysqlobject } = require("./db_connector/mysql_connector");
+
 const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");

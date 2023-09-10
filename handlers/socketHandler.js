@@ -29,6 +29,7 @@ handleSocket = (io,socket)=>{
     });
     socket.on('transaction', async(data, ackCallback) => {
         let reqBody = data;
+        reqBody = JSON.parse(reqBody);
   let user_id = reqBody.id;
   let fetch_coin = reqBody.coin;
   let gamename = reqBody.gamename;

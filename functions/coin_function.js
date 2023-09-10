@@ -46,10 +46,10 @@ let coinfunction = async (req, res) => {
         "gameName":gamename
     }
       let updateQuery = `UPDATE ${usertableName} SET purchased = ${final_coins} WHERE user_id = ${user_id}`;
-
+      let transactionlog_query = `INSERT INTO ${gametracktable} SET ?`;
       // Execute the UPDATE query using the promise-based 'query' method
       await connection.query(updateQuery);
-      await connection.query(updateQuery,logdata);
+      await connection.query(transactionlog_query,logdata);
 
       res.status(200).json({ "success_id": user_id });
     } else if (type == "debit") {
@@ -71,7 +71,7 @@ let coinfunction = async (req, res) => {
 
         // Execute the UPDATE query using the promise-based 'query' method
         await connection.query(updateQuery);
-        await connection.query(updateQuery,logdata);
+        await connection.query(transactionlog_query,logdata);
 
         
 

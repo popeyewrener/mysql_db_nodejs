@@ -1,8 +1,10 @@
+const dotenv = require("dotenv").config();
 const mysql_port = process.env.DB_PORT;
 const mysql_username = process.env.DB_USERNAME;
 const mysql_password = process.env.DB_PASSWORD;
 const mysql_db = process.env.DB_DATABASE;
 const mysql_host = process.env.DB_HOST;
+
 const { mysqlobject } = require("./../db_connector/mysql_connector");
 let coinfunction = async (req,res)=>{
     let reqBody = req.body;

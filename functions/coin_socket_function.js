@@ -86,6 +86,13 @@ let coinsocketfunction = async(data, ackCallback) => {
         }
         let elapsed_time = Date.now()-starttime;
         console.log(elapsed_time);
+        connection.end((err) => {
+            if (err) {
+              console.error('Error closing MySQL connection:', err);
+            } else {
+              console.log('MySQL connection closed');
+            }
+          });
 
     } catch (error) {
         console.error('Error:', error);

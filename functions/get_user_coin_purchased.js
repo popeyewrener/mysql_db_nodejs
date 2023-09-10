@@ -28,6 +28,13 @@ let getUserPurchased = async(data, ackCallback)=>{
         let userdata = results[0];
         let curr_purchased = userdata["purchased"];
         ackCallback({"purchased":curr_purchased});
+        connection.end((err) => {
+            if (err) {
+              console.error('Error closing MySQL connection:', err);
+            } else {
+              console.log('MySQL connection closed');
+            }
+          });
 
 
     }

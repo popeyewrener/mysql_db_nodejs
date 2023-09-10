@@ -10,7 +10,7 @@ const mysql_db = process.env.DB_DATABASE;
 const mysql_host = process.env.DB_HOST;
 let usertableName = "tbl_users";
     let gametracktable = "teenpatti_transactions";
-    let getdataquery = `SELECT purchased FROM ${usertableName} WHERE user_id = ${user_id}`;
+    
 handleSocket = (io,socket)=>{
     socket.on("sendMessage", (message)=>{
         io.emit("recieveMessage", message);
@@ -23,6 +23,7 @@ handleSocket = (io,socket)=>{
     let fetch_coin = reqBody.coin;
     let gamename = reqBody.gamename;
     let type = reqBody.type;
+    let getdataquery = `SELECT purchased FROM ${usertableName} WHERE user_id = ${user_id}`;
 
     
 
@@ -35,6 +36,7 @@ handleSocket = (io,socket)=>{
         mysql_password,
         mysql_db
         );
+        
 
         // Execute the SELECT query using the promise-based 'query' method
         const [results] = await connection.query(getdataquery);
@@ -105,6 +107,7 @@ handleSocket = (io,socket)=>{
     let reqBody = data;
     reqBody = JSON.parse(reqBody);
     let user_id = reqBody.id;
+    let getdataquery = `SELECT purchased FROM ${usertableName} WHERE user_id = ${user_id}`;
     try{
         let starttime = Date.now();
         const connection = await mysqlobject(

@@ -12,7 +12,7 @@ let coinfunction = async (req,res)=>{
     let type = reqBody.type;
 
 
-    let newData = {"test_num":test_num};
+    //let newData = {"test_num":test_num};
     let usertableName = "tbl_users";
     let getdataquery = `SELECT purchased FROM ${usertableName} WHERE id = ${user_id}`
 

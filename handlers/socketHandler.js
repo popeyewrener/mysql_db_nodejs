@@ -40,6 +40,7 @@ handleSocket = (io,socket)=>{
   let getdataquery = `SELECT purchased FROM ${usertableName} WHERE user_id = ${user_id}`;
 
   try {
+    let starttime = Date.now();
     const connection = await mysqlobject(
       mysql_host,
       mysql_port,
@@ -71,7 +72,7 @@ handleSocket = (io,socket)=>{
       await connection.query(updateQuery);
       await connection.query(transactionlog_query,logdata);
 
-      ackCallback({ "success_id": user_id });
+      ackCallback({  "success_id": user_id });
     } else if (type == "debit") {
       let final_coins = curr_purchased - fetch_coin;
 
@@ -100,6 +101,9 @@ handleSocket = (io,socket)=>{
         ackCallback({ "error": "not sufficient coins" });
       }
     }
+    let elapsed_time = Date.now()-starttime;
+    console.log(elapsed_time);
+
   } catch (error) {
     console.error('Error:', error);
     ackCallback({ "error": error.message });

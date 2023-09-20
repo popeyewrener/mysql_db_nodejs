@@ -35,8 +35,9 @@ let getUserHistory = async(data, ackCallback)=>{
         );
         const [results] = await connection.query(query);
 
-        let gamedata = results[0];
+        let gamedata = results;
        console.log(gamedata);
+       console.log(gamedata.length)
         
         connection.end((err) => {
             if (err) {
@@ -45,7 +46,7 @@ let getUserHistory = async(data, ackCallback)=>{
               console.log('MySQL connection closed');
             }
           });
-          ackCallback({"purchased":curr_purchased});
+          ackCallback({"history":gamedata});
 
 
     }

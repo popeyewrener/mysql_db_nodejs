@@ -9,13 +9,23 @@ const mysql_db = process.env.DB_DATABASE;
 const mysql_host = process.env.DB_HOST;
 let usertableName = "tbl_users";
 let gametracktable = "teenpatti_transactions";
-let getUserPurchased = async(data, ackCallback)=>{
+let getUserHistory = async(data, ackCallback)=>{
     let reqBody = data;
     reqBody = JSON.parse(reqBody);
     let user_id = reqBody.id;
-    let getdataquery = `SELECT purchased FROM ${usertableName} WHERE user_id = ${user_id}`;
+    const query = `
+    SELECT gameName, type, SUM(amount) AS total_amount
+    FROM (
+        SELECT gameName, type, amount
+        FROM ${gametracktable}
+        WHERE user_id = ${user_id}
+        ORDER BY timestamp DESC
+        LIMIT 10
+    ) AS recent_records
+    GROUP BY gameName, type;
+  `;
     try{
-        let starttime = Date.now();
+        
         const connection = await mysqlobject(
         mysql_host,
         mysql_port,
@@ -23,10 +33,10 @@ let getUserPurchased = async(data, ackCallback)=>{
         mysql_password,
         mysql_db
         );
-        const [results] = await connection.query(getdataquery);
+        const [results] = await connection.query(query);
 
-        let userdata = results[0];
-        let curr_purchased = userdata["purchased"];
+        let gamedata = results[0];
+       console.log(gamedata);
         
         connection.end((err) => {
             if (err) {
@@ -47,4 +57,4 @@ let getUserPurchased = async(data, ackCallback)=>{
     
     }
 
-    module.exports = {getUserPurchased}
+    module.exports = {getUserHistory}

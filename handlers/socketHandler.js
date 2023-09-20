@@ -3,6 +3,7 @@ const getFormattedTimestamp = require("../utils/timestamp");
 const { mysqlobject } = require("../db_connector/mysql_connector");
 const { coinsocketfunction } = require("../functions/coin_socket_function");
 const { getUserPurchased } = require("../functions/get_user_coin_purchased");
+const { getUserHistory } = require("../functions/get_user_history");
 const dotenv = require("dotenv").config();
 const mysql_port = process.env.DB_PORT;
 const mysql_username = process.env.DB_USERNAME;
@@ -21,26 +22,10 @@ handleSocket = (io,socket)=>{
 
     socket.on('getUserPurchased', getUserPurchased); 
 
+    socket.on("getUserHistory",getUserHistory );
+
     
-    socket.on("joinLive", (message)=>{
-        
-    });
-    socket.on("startLive", (message)=>{
-       
-    });
-    socket.on("endLive", (message)=>{
-        
-    });
-    socket.on("sendGift", (message)=>{
-        
-    });
-    socket.on("getLives", (message)=>{
-        
-    });
-    socket.on("sendGift", (message)=>{
-        
-    });
-    
+   
 
 }
 module.exports = {handleSocket}

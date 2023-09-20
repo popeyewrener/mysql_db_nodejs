@@ -16,7 +16,7 @@ let getUserHistory = async(data, ackCallback)=>{
     const query = `
     SELECT gameName, SUM(amount) AS total_amount, type
     FROM ${gametracktable}
-    WHERE user_id = ${userId}
+    WHERE user_id = ${user_id}
     GROUP BY gameName, type
     ORDER BY timestamp DESC
     LIMIT 10;

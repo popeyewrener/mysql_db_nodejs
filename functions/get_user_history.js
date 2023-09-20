@@ -14,15 +14,12 @@ let getUserHistory = async(data, ackCallback)=>{
     reqBody = JSON.parse(reqBody);
     let user_id = reqBody.id;
     const query = `
-    SELECT gameName, type, SUM(amount) AS total_amount
-    FROM (
-        SELECT gameName, type, amount
-        FROM ${gametracktable}
-        WHERE user_id = ${user_id}
-        ORDER BY timestamp DESC
-        LIMIT 10
-    ) AS recent_records
-    GROUP BY gameName, type;
+    SELECT gameName, SUM(amount) AS total_amount, type
+    FROM ${gametracktable}
+    WHERE user_id = ${userId}
+    GROUP BY gameName, type
+    ORDER BY timestamp DESC
+    LIMIT 10;
   `;
     try{
         

@@ -40,7 +40,12 @@ handleSocket = (io,socket)=>{
               duration--;
             }
           }, 1000);
-        });} );
+        });}
+         );
+
+    socket.on("leaveTimerRoom", (roomName)=>{
+        socket.leave(roomName);
+    });     
 
 
 

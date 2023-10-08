@@ -12,7 +12,7 @@ const mysql_db = process.env.DB_DATABASE;
 const mysql_host = process.env.DB_HOST;
 let usertableName = "tbl_users";
 let gametracktable = "teenpatti_transactions";
-    
+const roomTimers = {}; 
 handleSocket = (io,socket)=>{
     socket.on("sendMessage", (message)=>{
         io.emit("recieveMessage", message);
@@ -30,7 +30,10 @@ handleSocket = (io,socket)=>{
         console.log("Joined room")
     
         socket.on('startCountdown', (duration) => {
-          const countdownInterval = setInterval(() => {
+          if (roomTimers[roomName]) {
+            clearInterval(roomTimers[roomName]);
+          }
+          roomTimers[roomName] = setInterval(() => {
             console.log(duration)
             if (duration <= 0) {
               clearInterval(countdownInterval);

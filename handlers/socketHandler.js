@@ -25,26 +25,34 @@ handleSocket = (io,socket)=>{
     socket.on("getUserHistory",getUserHistory );
 
     socket.on("joinTimerRoom", (roomName) => {
-        console.log(roomName);
-        socket.join(roomName);
-        console.log("Joined room")
-    
-        socket.on('startCountdown', (duration) => {
-          if (roomTimers[roomName]) {
-            clearInterval(roomTimers[roomName]);
+      console.log(roomName);
+      socket.join(roomName);
+      console.log("Joined room");
+  
+      // Store the current active room for this socket
+      socket.activeRoom = roomName;
+  
+      socket.on('startCountdown', (duration) => {
+          const activeRoom = socket.activeRoom; // Get the active room for this socket
+          // Reset the old timer for the active room being started
+          if (roomTimers[activeRoom]) {
+              clearInterval(roomTimers[activeRoom]);
+              delete roomTimers[activeRoom]; // Remove the reference to the old timer
           }
-          roomTimers[roomName] = setInterval(() => {
-            console.log(duration)
-            if (duration <= 0) {
-              clearInterval(countdownInterval);
-              io.to(roomName).emit('countdownEnd');
-            } else {
-              io.to(roomName).emit('countdown', duration);
-              duration--;
-            }
+  
+          // Start a new countdown timer for the active room
+          roomTimers[activeRoom] = setInterval(() => {
+              if (duration <= 0) {
+                  clearInterval(roomTimers[activeRoom]);
+                  io.to(activeRoom).emit('countdownEnd');
+              } else {
+                  console.log(duration);
+                  io.to(activeRoom).emit('countdown', duration);
+                  duration--;
+              }
           }, 1000);
-        });}
-         );
+      });
+  });
 
     socket.on("leaveTimerRoom", (roomName)=>{
         socket.leave(roomName);

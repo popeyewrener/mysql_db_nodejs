@@ -46,7 +46,7 @@ let coinsocketfunction = async(data, ackCallback) => {
             "end_balance":final_coins,
             "amount":fetch_coin,
             "timestamp":getFormattedTimestamp(),
-            "type":type,
+            "type":"WIN",
             "gameName":gamename
         }
         let updateQuery = `UPDATE ${usertableName} SET purchased = ${final_coins} WHERE user_id = ${user_id}`;
@@ -66,7 +66,7 @@ let coinsocketfunction = async(data, ackCallback) => {
                 "end_balance":final_coins,
                 "amount":fetch_coin,
                 "timestamp":getFormattedTimestamp(),
-                "type":type,
+                "type":"LOSE",
                 "gameName":gamename
             }
             let updateQuery = `UPDATE ${usertableName} SET purchased = ${final_coins} WHERE user_id = ${user_id}`;

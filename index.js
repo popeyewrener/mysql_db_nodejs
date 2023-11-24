@@ -8,7 +8,7 @@ const coinRoute = require("./routes/coin_route");
 const server = http.createServer(app);
 const dotenv = require("dotenv").config();
 const port = process.env.PORT;
-
+require('events').EventEmitter.prototype._maxListeners = 0;
 //socket io
 const socket = require("socket.io");
 const socketentryController = require("./controllers/socket_controllers/socketentryController");

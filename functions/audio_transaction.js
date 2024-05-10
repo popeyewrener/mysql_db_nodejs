@@ -17,7 +17,16 @@ const getFormattedTimestamp = () => {
 }
 
 const { mysqlobject } = require("../db_connector/mysql_connector");
-
+function getCurrentTimeFormatted() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+  
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  }
 let audioTransaction = async (data, ack) => {
 
     const {  amount, senderId, recieverId, giftName, giftUrl } = data;
@@ -57,6 +66,8 @@ let audioTransaction = async (data, ack) => {
                     "receive_from": senderId,
                     "prev_balance":recieverPurchased,
                     "after_balance":reciever_final_coins,
+                    "create_at": getCurrentTimeFormatted()
+
                 }
                 let sending_data ={
                     "user_id":senderId,
@@ -64,6 +75,7 @@ let audioTransaction = async (data, ack) => {
                     "send_to": recieverId,
                     "prev_balance":curr_purchased,
                     "after_balance":final_coins,
+                    "sent_at": getCurrentTimeFormatted()
                 }
 
 

@@ -44,7 +44,7 @@ let audioTransaction = async (data, ack) => {
             if (final_coins >= 0) {
                 let logdata = {
                     "senderId":senderId,
-                    "recieverId":recieverId,
+                    "receiverId":recieverId,
                     "gift_amount":amount,
                     "giftName":giftName,
                     "giftUrl":giftUrl
@@ -52,8 +52,8 @@ let audioTransaction = async (data, ack) => {
 
                 let recieve_data ={
                     "user_id":recieverId,
-                    "recieve_amount":amount,
-                    "recieve_from": senderId,
+                    "receive_amount":amount,
+                    "receive_from": senderId,
                     "prev_balance":recieverPurchased,
                     "after_balance":reciever_final_coins,
                 }

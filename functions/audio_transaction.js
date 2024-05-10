@@ -1,6 +1,6 @@
 
 
-const recieve_table = "tbl_totel_receive_record";
+const receive_table = "tbl_totel_receive_record";
 const sending_table = "tbl_totel_sending_record";
 const audio_gifts_data = "audio_gifts_data";
 
@@ -41,6 +41,7 @@ let audioTransaction = async (data, ack) => {
             let recieverPurchased = recieverData["purchased"];
             let final_coins = curr_purchased - amount;
             let reciever_final_coins = recieverPurchased + amount;
+            
             if (final_coins >= 0) {
                 let logdata = {
                     "senderId":senderId,
@@ -50,7 +51,7 @@ let audioTransaction = async (data, ack) => {
                     "giftUrl":giftUrl
                 }
 
-                let recieve_data ={
+                let receive_data ={
                     "user_id":recieverId,
                     "receive_amount":amount,
                     "receive_from": senderId,
@@ -73,12 +74,12 @@ let audioTransaction = async (data, ack) => {
                 await connection.query(updateSenderQuery).then(async (result)=>{
                     await connection.query(updateRecieverQuery).then(async (result)=>{
                         await connection.query(transactionlog_query,logdata).then(async (result)=>{
-                            await connection.query(`INSERT INTO ${recieve_table} SET ?`,recieve_data).then(async (result)=>{
+                            await connection.query(`INSERT INTO ${receive_table} SET ?`,receive_data).then(async (result)=>{
                                 await connection.query(`INSERT INTO ${sending_table} SET ?`,sending_data).then(async (result)=>{
                                     ack({  "success_id": 200 });
                                 }).catch((e)=>{
                                     console.log(e);
-                                    ack({  "error": "Error in sending data" });
+                                    ack({  "error": "Error in sending data", "data": e });
 
 
                                 });

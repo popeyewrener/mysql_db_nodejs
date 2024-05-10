@@ -20,7 +20,7 @@ const { mysqlobject } = require("../db_connector/mysql_connector");
 
 let audioTransaction = async (data, ack) => {
 
-    const {  amount, senderId, recieverId, giftName, giftUrl } = req.body;
+    const {  amount, senderId, recieverId, giftName, giftUrl } = data;
 
     let getdataquery = `SELECT purchased FROM ${userTable} WHERE user_id = ${senderId}`;
     let getRecieverDataQuery = `SELECT purchased FROM ${userTable} WHERE user_id = ${recieverId}`;

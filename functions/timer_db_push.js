@@ -26,7 +26,7 @@ async function timerDbPush(dataList, ack) {
             mysql_db
         );
 
-        const insertQuery = `INSERT INTO ${timerdbtable} (room_id, time, user_id) VALUES ?`; 
+        const insertQuery = `INSERT INTO ${timerdbtable} (roomId, time, userId) VALUES ?`; 
 
         const values = dataList.map(data => [data.roomId, data.time, data.userId]); // Create value array for prepared statement
 

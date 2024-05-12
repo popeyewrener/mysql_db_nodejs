@@ -33,7 +33,7 @@ let audioTransaction = async (data, ack) => {
     console.log(data);
 
     let getdataquery = `SELECT purchased FROM ${userTable} WHERE user_id = ${senderId}`;
-    let getRecieverDataQuery = `SELECT purchased FROM ${userTable} WHERE user_id = ${recieverId}`;
+    let getRecieverDataQuery = `SELECT my_wallet FROM ${userTable} WHERE user_id = ${recieverId}`;
     
     try{
         const connection = await mysqlobject(
@@ -48,9 +48,9 @@ let audioTransaction = async (data, ack) => {
           let curr_purchased = userdata["purchased"];  
             const [recieverResults] = await connection.query(getRecieverDataQuery);
             let recieverData = recieverResults[0];
-            let recieverPurchased = recieverData["purchased"];
+            let recievermyWallet = recieverData["my_wallet"];
             let final_coins = curr_purchased - amount;
-            let reciever_final_coins = recieverPurchased + amount;
+            let reciever_final_coins = recievermyWallet + amount;
             
             if (final_coins >= 0) {
                 let logdata = {
@@ -65,7 +65,7 @@ let audioTransaction = async (data, ack) => {
                     "user_id":recieverId,
                     "receive_amount":amount,
                     "receive_from": senderId,
-                    "prev_balance":recieverPurchased,
+                    "prev_balance":recievermyWallet,
                     "after_balance":reciever_final_coins,
                     "create_at": getCurrentTimeFormatted()
 
@@ -82,7 +82,7 @@ let audioTransaction = async (data, ack) => {
 
 
                 let updateSenderQuery = `UPDATE ${userTable} SET purchased = ${final_coins} WHERE user_id = ${senderId}`;
-                let updateRecieverQuery = `UPDATE ${userTable} SET purchased = ${reciever_final_coins} WHERE user_id = ${recieverId}`;
+                let updateRecieverQuery = `UPDATE ${userTable} SET my_wallet = ${reciever_final_coins} WHERE user_id = ${recieverId}`;
                 let transactionlog_query = `INSERT INTO ${audio_gifts_data} SET ?`;
                 await connection.query(updateSenderQuery).then(async (result)=>{
                     await connection.query(updateRecieverQuery).then(async (result)=>{

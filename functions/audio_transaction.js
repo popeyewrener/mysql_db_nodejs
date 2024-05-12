@@ -29,7 +29,7 @@ function getCurrentTimeFormatted() {
   }
 let audioTransaction = async (data, ack) => {
 
-    const {  amount, senderId, recieverId, giftName, giftUrl } = data;
+    const {  amount, senderId, recieverId, giftName, giftUrl, roomId } = data;
     console.log(data);
 
     let getdataquery = `SELECT purchased FROM ${userTable} WHERE user_id = ${senderId}`;
@@ -58,7 +58,8 @@ let audioTransaction = async (data, ack) => {
                     "receiverId":recieverId,
                     "gift_amount":amount,
                     "giftName":giftName,
-                    "giftUrl":giftUrl
+                    "giftUrl":giftUrl,
+                    "roomId":roomId
                 }
 
                 let receive_data ={

@@ -11,7 +11,7 @@ const mysql_host = process.env.DB_HOST;
 
 async function timerDbPush(dataList, ack) {
     // Input validation: Ensure we have an array of data
-    if (!Array.isArray(dataList)) {
+    if (!Array.isArray(dataList.timers)) {
         console.error("Error: Invalid data format. Expected an array.");
         ack({ error: "Invalid data format." });
         return;
@@ -25,10 +25,13 @@ async function timerDbPush(dataList, ack) {
             mysql_password,
             mysql_db
         );
+        const timerdata = dataList.timers;
 
-        const insertQuery = `INSERT INTO ${timerdbtable} (roomId, time, userId) VALUES ?`; 
+        const roomOwner = dataList.roomOwner;
 
-        const values = dataList.map(data => [data.roomId, data.timer, data.userId]); // Create value array for prepared statement
+        const insertQuery = `INSERT INTO ${timerdbtable} (roomId, time, userId, roomOwner) VALUES ?`; 
+
+        const values = timerdata.map(data => [data.roomId, data.timer, data.userId, roomOwner]); // Create value array for prepared statement
 
         await connection.query(insertQuery, [values]); // Execute prepared statement
 

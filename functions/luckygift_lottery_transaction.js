@@ -63,7 +63,7 @@ let luckygiftlotterytransaction = async (data, ack) => {
                 //"timestamp":getCurrentTimeFormatted()
             }
             let insertQuery = `INSERT INTO ${audio_gifts_data} SET ?`;
-            await connection.execute(insertQuery, logdata);
+            await connection.query(insertQuery, logdata);
     
             let updateQuery = `UPDATE ${userTable} SET purchased = ? WHERE user_id = ?`;
             await connection.execute(updateQuery, [final_coins, winner]);
@@ -116,7 +116,7 @@ let luckygiftlotterytransaction = async (data, ack) => {
                 //"timestamp":getCurrentTimeFormatted()
             }
             let insertQuery = `INSERT INTO ${audio_gifts_data} SET ?`;
-            await connection.execute(insertQuery, logdata);
+            await connection.query(insertQuery, logdata);
     
             let updateQuery = `UPDATE ${userTable} SET purchased = ? WHERE user_id = ?`;
             await connection.execute(updateQuery, [final_coins, winner]);

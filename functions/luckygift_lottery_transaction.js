@@ -119,8 +119,17 @@ let luckygiftlotterytransaction = async (data, ack) => {
             await connection.end();
         }
         catch (error) {
-            await connection.rollback();
-            ack({ "error": error.message });
+            console.error('Error in transaction:', error);
+            ack({ "error": "Transaction error", "data": error });
+    
+            if (connection) {
+                try {
+                    await connection.rollback();
+                    await connection.end();
+                } catch (rollbackError) {
+                    console.error('Error rolling back transaction:', rollbackError);
+                }
+            }
         }
         
        

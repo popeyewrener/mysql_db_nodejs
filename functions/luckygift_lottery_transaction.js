@@ -54,7 +54,7 @@ let luckygiftlotterytransaction = async (data, ack) => {
             let logdata = {
                 "senderId":winner,
                 "receiverId":winner,
-                "gift_amount":amount,
+                "amount":amount,
                 "giftName":giftName,
                 "giftUrl":giftUrl,
                 "roomId":roomId,
@@ -107,7 +107,7 @@ let luckygiftlotterytransaction = async (data, ack) => {
             let logdata = {
                 "senderId":winner,
                 "receiverId":winner,
-                "gift_amount":amount,
+                "amount":amount,
                 "giftName":giftName,
                 "giftUrl":giftUrl,
                 "roomId":roomId,

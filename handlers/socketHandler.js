@@ -6,6 +6,7 @@ const { getUserPurchased } = require("../functions/get_user_coin_purchased");
 const { getUserHistory } = require("../functions/get_user_history");
 const { audioTransaction } = require("../functions/audio_transaction");
 const { timerDbPush } = require("../functions/timer_db_push");
+const { luckygiftTransaction } = require("../functions/luckygift_transaction");
 const dotenv = require("dotenv").config();
 const mysql_port = process.env.DB_PORT;
 const mysql_username = process.env.DB_USERNAME;
@@ -25,6 +26,8 @@ handleSocket = (io,socket)=>{
     socket.on('audioTransaction', audioTransaction);
 
     socket.on('audiotimerDbPush', timerDbPush);
+
+    socket.on('luckygiftTransaction', luckygiftTransaction);
 
     
 

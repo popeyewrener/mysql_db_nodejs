@@ -186,7 +186,7 @@ let luckygiftTransaction = async (data, ack) => {
     
                 await connection.execute(updateSenderQuery, [final_coins, senderId]);
                 await connection.execute(updateRecieverQuery, [reciever_final_coins, recieverId]);
-                await connection.execute(transactionlog_query, logdata);
+                await connection.execute(transactionlog_query, [logdata]);
                 await connection.execute(`INSERT INTO ${receive_table} SET ?`, [receive_data]);
                 await connection.execute(`INSERT INTO ${sending_table} SET ?`, [sending_data]);
     

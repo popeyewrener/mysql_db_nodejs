@@ -116,14 +116,13 @@ let luckygiftlotterytransaction = async (data, ack) => {
     
             await connection.commit();
             ack({ "success_id": 200 });
+            await connection.end();
         }
         catch (error) {
             await connection.rollback();
             ack({ "error": error.message });
         }
-        finally {
-            connection.release();
-        }
+        
        
     }
 }

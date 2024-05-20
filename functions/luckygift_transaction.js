@@ -71,6 +71,7 @@ let luckygiftTransaction = async (data, ack) => {
                     "roomOwner": roomOwner,
                     "type": type
                 }
+                console.log("Logdata",logdata);
     
                 let receive_data = {
                     "user_id": recieverId,

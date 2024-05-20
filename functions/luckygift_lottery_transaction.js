@@ -54,29 +54,36 @@ let luckygiftlotterytransaction = async (data, ack) => {
             let logdata = {
                 "senderId":winner,
                 "receiverId":winner,
-                "amount":amount,
+                "gift_amount":amount,
                 "giftName":giftName,
                 "giftUrl":giftUrl,
                 "roomId":roomId,
                 "roomOwner":roomOwner,
                 "type":"audio_win",
-               // "timestamp":getCurrentTimeFormatted()
+                //"timestamp":getCurrentTimeFormatted()
             }
             let insertQuery = `INSERT INTO ${audio_gifts_data} SET ?`;
-            await connection.query(insertQuery, logdata);
+            await connection.execute(insertQuery, logdata);
     
             let updateQuery = `UPDATE ${userTable} SET purchased = ? WHERE user_id = ?`;
             await connection.execute(updateQuery, [final_coins, winner]);
     
             await connection.commit();
-            ack({ "success": "Transaction Successful" });
+            ack({ "success_id": 200 });
+            await connection.end();
         }
         catch (error) {
-            await connection.rollback();
-            ack({ "error": error.message });
-        }
-        finally {
-            connection.release();
+            console.error('Error in transaction:', error);
+            ack({ "error": "Transaction error", "data": error });
+    
+            if (connection) {
+                try {
+                    await connection.rollback();
+                    await connection.end();
+                } catch (rollbackError) {
+                    console.error('Error rolling back transaction:', rollbackError);
+                }
+            }
         }
         
     }

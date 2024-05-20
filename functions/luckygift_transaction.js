@@ -106,7 +106,13 @@ let luckygiftTransaction = async (data, ack) => {
                 ack({ "error": "not sufficient coins" });
             }
     
-            await connection.end();
+            connection.end((err) => {
+                if (err) {
+                  console.error('Error closing MySQL connection:', err);
+                } else {
+                  console.log('MySQL connection closed');
+                }
+              });
         } catch (error) {
             console.error('Error in transaction:', error);
             ack({ "error": "Transaction error", "data": error });

@@ -63,7 +63,7 @@ let luckygiftlotterytransaction = async (data, ack) => {
                // "timestamp":getCurrentTimeFormatted()
             }
             let insertQuery = `INSERT INTO ${audio_gifts_data} SET ?`;
-            await connection.execute(insertQuery, logdata);
+            await connection.query(insertQuery, logdata);
     
             let updateQuery = `UPDATE ${userTable} SET purchased = ? WHERE user_id = ?`;
             await connection.execute(updateQuery, [final_coins, winner]);
@@ -115,7 +115,7 @@ let luckygiftlotterytransaction = async (data, ack) => {
             await connection.execute(updateQuery, [final_coins, winner]);
     
             await connection.commit();
-            ack({ "success": "Transaction Successful" });
+            ack({ "success_id": 200 });
         }
         catch (error) {
             await connection.rollback();
@@ -128,4 +128,4 @@ let luckygiftlotterytransaction = async (data, ack) => {
     }
 }
 
-module.exports = { luckygiftTransaction }
+module.exports = { luckygiftlotterytransaction }

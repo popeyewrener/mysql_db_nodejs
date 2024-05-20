@@ -92,7 +92,7 @@ let luckygiftTransaction = async (data, ack) => {
     
                 let updateSenderQuery = `UPDATE ${userTable} SET purchased = ? WHERE user_id = ?`;
                 let updateRecieverQuery = `UPDATE ${userTable} SET my_wallet = ? WHERE user_id = ?`;
-                let transactionlog_query = `INSERT INTO ${audio_gifts_data} SET ?`;
+                let transactionlog_query = `INSERT INTO ${audio_gifts_data} VALUES ?`;
     
                 await connection.execute(updateSenderQuery, [final_coins, senderId]);
                 await connection.execute(updateRecieverQuery, [reciever_final_coins, recieverId]);

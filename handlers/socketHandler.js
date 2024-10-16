@@ -8,6 +8,7 @@ const { audioTransaction } = require("../functions/audio_transaction");
 const { timerDbPush } = require("../functions/timer_db_push");
 const { luckygiftTransaction } = require("../functions/luckygift_transaction");
 const { luckygiftlotterytransaction } = require("../functions/luckygift_lottery_transaction");
+const { spinwheelTransaction } = require("../functions/spin_wheel_transaction");
 const dotenv = require("dotenv").config();
 const mysql_port = process.env.DB_PORT;
 const mysql_username = process.env.DB_USERNAME;
@@ -31,6 +32,8 @@ handleSocket = (io,socket)=>{
     socket.on('luckygiftTransaction', luckygiftTransaction);
 
     socket.on("luckygift_lottery_transaction", luckygiftlotterytransaction);
+
+    socket.on("spin_wheel_transaction", spinwheelTransaction);
 
     
 

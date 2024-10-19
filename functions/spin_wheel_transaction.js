@@ -52,6 +52,10 @@ let spinwheelTransaction = async (data, ack) => {
         let curr_purchased = userdata["purchased"];
 
         let final_coins = (curr_purchased - amount ) + (amount * multiplier);
+        if (final_coins < 0) {
+            ack({ "error": "Insufficient balance", "userId": userId });
+            return;
+        }
         let logdata = {
             "user_id": userId,
             "previous_balance": curr_purchased,
